@@ -37,6 +37,9 @@ for (const [cli, entry] of Object.entries(feed.clis ?? {})) {
     for (const key of Object.keys(row)) if (!ROW_FIELDS.has(key)) fail(`${where}: unknown field "${key}"`)
     if (row.retired === true && row.retiredAt == null) fail(`${where}: retired rows need retiredAt`)
     if (row.alias === true && row.releasedAt != null) fail(`${where}: alias rows float and have no releasedAt`)
+    if (row.alias !== true && (typeof row.releasedAt !== 'string' || Number.isNaN(Date.parse(row.releasedAt)))) {
+      fail(`${where}: releasedAt is required (the date the model shipped; pickers sort by it, newest first)`)
+    }
     for (const key of ['releasedAt', 'retiredAt']) {
       if (row[key] != null && Number.isNaN(Date.parse(row[key]))) fail(`${where}: ${key} is not a date`)
     }

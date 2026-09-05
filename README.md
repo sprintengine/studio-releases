@@ -20,8 +20,11 @@ the model within the hour and it shows on sprintengine.ai/models.
 
 - `id` is the exact string the CLI takes after `--model` (or its equivalent).
 - `label` is what the picker shows.
-- `releasedAt` marks the row "New" for 30 days. Leave it off a floating alias
-  like `opus[1m]` and set `"alias": true` instead.
+- `releasedAt` is required: the date the model shipped. Pickers list models
+  newest first by it, and it marks the row "New" for 30 days. The one
+  exception is a floating alias like `opus[1m]` or `fable`: set
+  `"alias": true` and leave `releasedAt` off; aliases have no date of their
+  own and sit after the dated rows.
 - To retire a model set `"retired": true` and a `retiredAt` date. Never delete
   a row: the feed has to be able to hide a model an older build still ships.
 
