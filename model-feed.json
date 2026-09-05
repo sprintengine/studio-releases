@@ -23,12 +23,22 @@
         {
           "id": "claude-fable-5",
           "label": "Fable 5",
+          "retired": true
+        },
+        {
+          "id": "fable",
+          "label": "Fable",
           "retired": false
         }
       ]
     },
     "codex": {
       "models": [
+        {
+          "id": "gpt-6-astra",
+          "label": "GPT-6 Astra",
+          "retired": false
+        },
         {
           "id": "gpt-5.6-sol",
           "label": "GPT-5.6 Sol",
