@@ -23,7 +23,7 @@
         {
           "id": "claude-fable-5",
           "label": "Fable 5",
-          "retired": true
+          "retired": false
         },
         {
           "id": "fable",
