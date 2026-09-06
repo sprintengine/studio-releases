@@ -5,13 +5,24 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
 - **Releases**: installers and `latest*.yml`, which the app's updater reads.
 - **`model-feed.json`**: the models each agent CLI can be told to use. Every
   running studio fetches it once an hour; the website renders it.
-- **The catalogue** — what the Plugins door offers as the *Multicode* source:
-  - `marketplace.json`: the index. First-party bundles, automation starters,
-    the bundled agent CLIs, and Claude Code plugin entries that point at their
-    upstream repository at a pinned commit with per-file digests.
-  - `plugins/<id>/`, `icons/`, `trusted-publishers.json`: the first-party
-    signed bundles and automation starters the index references.
-  - `skills/<id>/`: the skills the studio ships as its own.
+- **The Claude marketplace** — this repository IS one, so any harness that
+  speaks the format can add it, and the studio's own catalogues read it as the
+  *SprintEngine Studio* source:
+  - `.claude-plugin/marketplace.json`: the listing. `sprintengine-studio` is
+    always first; it is the plugin the studio installs into every workspace it
+    opens, and the row every catalogue shows at the top.
+  - `sprintengine-studio/`: that plugin — the stdio bridge to a running studio
+    (`.mcp.json`), its hooks, and one skill per area.
+  - `studio-skills/`: the workflow skills the studio ships — backlog, debug,
+    prototype, review guide, handoff and the rest — as a plugin of their own,
+    so each stays installable on its own from the Skills catalogue.
+- **The signed index** — what a Claude marketplace cannot carry, because the
+  studio refuses code-bearing components from any GitHub source unless they are
+  signed:
+  - `marketplace.json`: the agent CLIs, the automation starters and the signed
+    first-party modules.
+  - `plugins/<id>/`, `icons/`, `trusted-publishers.json`: the bundles that
+    index references, and the keys their signatures are checked against.
   - `mcps/catalog.json`: the launchable MCP server catalogue.
 
 No source code is here. Release notes are written by hand.
