@@ -16,6 +16,13 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
   - `studio-skills/`: the workflow skills the studio ships — backlog, debug,
     prototype, review guide, handoff and the rest — as a plugin of their own,
     so each stays installable on its own from the Skills catalogue.
+  - `brave-search/`, `kubernetes/`, `snyk/`: MCP servers the studio ships,
+    each packaged as a plugin — the server's `.mcp.json` plus the skill that
+    teaches it. A server with no skill is not listed here, because an agent
+    left to learn a server from its tool descriptions is what these exist to
+    stop, and a wrong manual is worse than none. Servers Anthropic's own
+    marketplace already carries are not duplicated here; that tab is their
+    home.
 - **The signed index** — what a Claude marketplace cannot carry, because the
   studio refuses code-bearing components from any GitHub source unless they are
   signed:
