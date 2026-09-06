@@ -30,7 +30,11 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
     first-party modules.
   - `plugins/<id>/`, `icons/`, `trusted-publishers.json`: the bundles that
     index references, and the keys their signatures are checked against.
-  - `mcps/catalog.json`: the launchable MCP server catalogue.
+  - `mcps/catalog.json`: the launchable MCP servers no plugin carries. Sixteen
+    of them, since the frozen-snapshots retirement (2026-09-06) cut the 39 rows
+    `anthropics/claude-plugins-official` already lists as plugins and the 3 we
+    published as plugins ourselves. A server leaves this file the day its
+    plugin lands, so nobody is ever offered two routes to the same server.
 
 No source code is here. Release notes are written by hand.
 
@@ -62,12 +66,17 @@ Every running studio fetches `marketplace.json` once an hour with an ETag, so
 an edit here reaches every machine without an app release. Studios that
 installed a plugin from it are told an update is available on the next fetch.
 
-- **A Claude Code plugin from GitHub** — add an entry with `provides:
-  ["skills"]`, a `source` URL of the form
-  `https://github.com/<owner>/<repo>/tree/<commit>/<path>`, and its `skills[]`
-  with per-file `sha256` digests. The studio's `npm run catalogue:generate`
-  produces these entries from the HotStack catalogue snapshot; hand-written
-  entries are fine too.
+- **A Claude Code plugin from GitHub** — don't. The studio reads
+  `anthropics/claude-plugins-official` live, at the commits that marketplace
+  pins, and shows it as the Anthropic tab in every catalogue. This index held a
+  frozen copy of 256 of those plugins until the frozen-snapshots retirement
+  (2026-09-06) removed them; 255 of the 256 were verified present in a live
+  scan of that repository first. An entry with `provides: ["skills"]` is still
+  a valid shape — `source` URL of the form
+  `https://github.com/<owner>/<repo>/tree/<commit>/<path>` plus `skills[]` with
+  per-file `sha256` digests — and it is the right one for a skill bundle that
+  has to be SIGNED, which a Claude marketplace cannot carry. It is the wrong one
+  for anything a marketplace can list.
 - **An MCP server** — an inline entry (`mcp.servers[]`, `provides: ["mcp"]`)
   or a signed bundle under `plugins/<id>/`.
 - **A skill of our own** — a directory under `skills/<id>/` with a `SKILL.md`
