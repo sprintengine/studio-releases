@@ -13,12 +13,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "studio-skills",
-      "source": "./studio-skills",
-      "description": "The workflow skills SprintEngine Studio ships: backlog, debug, prototype, review guide, handoff, knowledge, and the rest.",
-      "version": "1.0.0"
-    },
-    {
       "name": "brave-search",
       "source": "./brave-search",
       "description": "Search the live web through the Brave Search API: web, news, video, image, local and AI summaries, with the skill that says which of the six searches to reach for.",
