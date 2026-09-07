@@ -12,10 +12,13 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
     always first; it is the plugin the studio installs into every workspace it
     opens, and the row every catalogue shows at the top.
   - `sprintengine-studio/`: that plugin — the stdio bridge to a running studio
-    (`.mcp.json`), its hooks, and one skill per area.
-  - `studio-skills/`: the workflow skills the studio ships — backlog, debug,
-    prototype, review guide, handoff and the rest — as a plugin of their own,
-    so each stays installable on its own from the Skills catalogue.
+    (`.mcp.json`), its hooks, and its skills: one per area, plus `debug` and
+    `review-guide`, which are features of the studio rather than general advice.
+    These are the only skills published here. The studio is not in the business
+    of shipping skills; it provides a place to add skill sources, and may
+    recommend some. The `studio-skills/` pack that used to sit beside this one —
+    twelve general-purpose workflow skills — was retired on 2026-09-07 for that
+    reason, and its `backlog` duplicated `sprintengine-studio`'s `studio-backlog`.
   - `brave-search/`, `kubernetes/`, `snyk/`: MCP servers the studio ships,
     each packaged as a plugin — the server's `.mcp.json` plus the skill that
     teaches it. A server with no skill is not listed here, because an agent
