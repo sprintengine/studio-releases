@@ -5,12 +5,48 @@ description: Work, create, or triage Multicode Backlog items and epics. Use when
 
 # Backlog
 
-Items are markdown files under `backlog/` (epics under `backlog/epics/`). Each
-file's frontmatter is the source of truth for its lifecycle; `.multi-code/` is
-app-owned, never edited by hand. Field names and their valid values come from the
-`backlog.*` MCP tool schemas — read them there rather than from this skill, and
-use those tools for mutations so timestamps and links stay app-owned. Without
-them, edit frontmatter directly and drop the `updated:` line. Three actions:
+Items are markdown files filed under the epic they belong to —
+`backlog/<epic-slug>/<item>.md` — or `backlog/unfiled/` when they have no epic.
+Epic definitions stay at `backlog/epics/<epic-slug>.md`. Each file's frontmatter
+is the source of truth for its lifecycle; `.multi-code/` is app-owned, never
+edited by hand. Use the `backlog.*` MCP tools for mutations so timestamps stay
+app-owned; without them, edit frontmatter directly and drop the `updated:` line
+rather than inventing a timestamp.
+
+**The file.** Frontmatter is a flat block of `key: value` scalars — no nested
+YAML, no lists, no quotes needed. Unknown keys are preserved, so nothing you add
+by hand is lost.
+
+```yaml
+---
+type: feature        # epic | feature | bug | mockup | spike
+status: idea         # idea | ready | in_progress | needs_input | completed | archived
+difficulty: m        # xs | s | m | l | xl              effort to build
+criticality: high    # low | normal | high | critical   impact if it is missing
+risk: normal         # low | normal | high              likelihood it breaks something
+epic: auth-revamp    # optional; the epic file's name stem
+dependsOn: token-rotation, session-expiry   # optional; comma-separated sibling slugs
+mockups: backlog/mockups/2026-07-06-x.html  # optional; comma-separated project-relative paths
+---
+
+# Title as a single H1
+
+What, why, user impact, and anything needed to understand the request.
+```
+
+`type` is the only field OKF requires; fill the rest only where you can do so
+honestly — an unsized, untriaged capture is a calm state, not a defect, and a
+guessed `criticality` is worse than none. `risk` is a separate axis from
+`difficulty`: how likely the change is to break something, not how big it is.
+
+Three fields are the app's to write, never yours. **`id:`** is a workspace-global
+integer allocated once and never changed — omit it and the scan assigns one; the
+`KEY-<id>` you see in the panel is composed from it at render time.
+**`updated:`** is a precise UTC instant the app stamps on every real mutation.
+And `sprints`, `pr`, `starred` and `highlight` are written by the app when a
+sprint runs, a pull request opens, or somebody stars the row.
+
+On an epic file, `dependenciesPlanned: true` is the one extra field — see below.
 
 **Work.** The item is your brief — read it whole, and read any mockup it
 attaches. Before implementing, check it against the current code: items drift,
@@ -48,10 +84,12 @@ sprint start from the epic with no planning agent; without it, a sprint plans th
 epic again before any work starts. Nothing recomputes it, so changing which items
 belong to the epic is your cue to re-check the order and the flag.
 
-**Create.** Write the file yourself — no tool needed. Choose an unused slug,
-start with frontmatter carrying only fields you can honestly fill, then a
-`# Title` and the body: what, why, user impact, and anything needed to
-understand the request. Omit `id:` and `updated:`; the app assigns them.
+**Create.** Write the file yourself — no tool needed. Put it in its epic's
+folder, or `backlog/unfiled/` if it has none. Name it
+`<YYYY-MM-DD>-<slug>.md`, and pick a slug unused anywhere in `backlog/`:
+`dependsOn:` and `epic:` address an item by filename stem alone, so two items
+sharing one collide on every pointer aimed at either. Then the frontmatter above,
+a `# Title`, and the body.
 
 **Triage.** Judge every non-archived item against the current codebase: still
 worth doing, already built, overtaken, or simply mis-statused. Report them
