@@ -3,10 +3,10 @@
 // studio recommends. Each row names a GitHub repository a person can add as a
 // source; this repo authors none of what they hold.
 //
-// The cap is not cosmetic. Unauthenticated GitHub allows 60 requests an hour
-// per machine, and the studio stops a scan after 20 repositories without a
-// token, so a long list would spend a person's budget before it reached the
-// sources they care about. Six is the ceiling.
+// The cap is not cosmetic. Every source costs GitHub requests on every scan,
+// and a studio with no token is on the anonymous budget — 60 requests an hour
+// per machine — so a long list would spend it before reaching the sources
+// somebody came for. Six is the ceiling.
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -33,7 +33,7 @@ if (!Array.isArray(feed.sources)) {
   process.exit(1)
 }
 if (feed.sources.length > MAX_SOURCES) {
-  errors.push(`sources holds ${feed.sources.length} rows; the ceiling is ${MAX_SOURCES} (GitHub rate limits).`)
+  errors.push(`sources holds ${feed.sources.length} rows; the ceiling is ${MAX_SOURCES} (anonymous GitHub rate limits).`)
 }
 
 const ids = new Set()

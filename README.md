@@ -129,10 +129,12 @@ chooses.
 - Anthropic's own sources come first. Everything after them is a community
   marketplace we would point somebody at, not something we vouch for.
 
-**The list is capped at six**, and the cap is the point. Unauthenticated GitHub
-allows 60 requests an hour per machine, and a studio without a token stops a
-scan after 20 repositories; a longer list would spend a person's budget before
-it reached the sources they came for. Adding a seventh means removing one.
+**The list is capped at six**, and the cap is the point. Every source costs
+GitHub requests on every scan — a tree listing plus a fetch per manifest — and
+a studio with no token in Settings is on the anonymous budget, which is 60
+requests an hour per machine and 10 searches a minute. A longer list would
+spend that before it reached the sources somebody came for. Adding a seventh
+means removing one.
 
 MCP servers need no separate route here: a plugin in any of these marketplaces
 brings its own `.mcp.json`, which is why `mcps/catalog.json` — a list of servers
