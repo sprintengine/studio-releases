@@ -5,39 +5,49 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
 - **Releases**: installers and `latest*.yml`, which the app's updater reads.
 - **`model-feed.json`**: the models each agent CLI can be told to use. Every
   running studio fetches it once an hour; the website renders it.
+- **`sources.json`**: the skill and plugin SOURCES the studio recommends —
+  GitHub repositories in the Claude plugin marketplace format, each of which a
+  person adds as a source in one click. See "The sources list" below.
 - **The Claude marketplace** — this repository IS one, so any harness that
   speaks the format can add it, and the studio's own catalogues read it as the
   *SprintEngine Studio* source:
-  - `.claude-plugin/marketplace.json`: the listing. `sprintengine-studio` is
-    always first; it is the plugin the studio installs into every workspace it
-    opens, and the row every catalogue shows at the top.
+  - `.claude-plugin/marketplace.json`: the listing. It holds exactly one row.
   - `sprintengine-studio/`: that plugin — the stdio bridge to a running studio
-    (`.mcp.json`), its hooks, and its skills: one per area, plus `debug` and
-    `review-guide`, which are features of the studio rather than general advice.
-    These are the only skills published here. The studio is not in the business
-    of shipping skills; it provides a place to add skill sources, and may
-    recommend some. The `studio-skills/` pack that used to sit beside this one —
-    twelve general-purpose workflow skills — was retired on 2026-09-07 for that
-    reason, and its `backlog` duplicated `sprintengine-studio`'s `studio-backlog`.
-  - `brave-search/`, `kubernetes/`, `snyk/`: MCP servers the studio ships,
-    each packaged as a plugin — the server's `.mcp.json` plus the skill that
-    teaches it. A server with no skill is not listed here, because an agent
-    left to learn a server from its tool descriptions is what these exist to
-    stop, and a wrong manual is worse than none. Servers Anthropic's own
-    marketplace already carries are not duplicated here; that tab is their
-    home.
+    (`.mcp.json`), its hooks, and its skills: one per studio area
+    (`studio-sprints`, `studio-backlog`, `studio-automations`,
+    `studio-workspaces`, `studio-review`), plus `debug` and `review-guide`,
+    which are features of the studio rather than general advice. Every one of
+    them teaches an agent to drive SprintEngine Studio itself.
+
+    These are the only skills published here, and they are the only ones that
+    ever will be. The studio is not in the business of authoring skills, or of
+    repackaging other people's MCP servers: it provides a place to add sources,
+    and recommends some. Two retirements followed from that rule. The
+    `studio-skills/` pack — twelve general-purpose workflow skills — went on
+    2026-09-07; `debug` and `review-guide` were the two that belonged to the
+    studio, and they live in `sprintengine-studio/skills/` now. The
+    `brave-search/`, `kubernetes/` and `snyk/` plugins went on 2026-09-08,
+    along with `mcps/catalog.json`, for the same reason: an MCP server someone
+    else wrote is not ours to publish, and a plugin in a marketplace already
+    carries its own `.mcp.json`.
 - **The signed index** — what a Claude marketplace cannot carry, because the
   studio refuses code-bearing components from any GitHub source unless they are
   signed:
-  - `marketplace.json`: the agent CLIs, the automation starters and the signed
-    first-party modules.
+  - `marketplace.json`: eighteen rows — thirteen agent CLIs and five automation
+    starters. No modules, and no MCP servers: the four signed MCP bundles left
+    on 2026-09-08 with the rest of the servers, because the studio publishes its
+    own plugin and nobody else's.
   - `plugins/<id>/`, `icons/`, `trusted-publishers.json`: the bundles that
-    index references, and the keys their signatures are checked against.
-  - `mcps/catalog.json`: the launchable MCP servers no plugin carries. Sixteen
-    of them, since the frozen-snapshots retirement (2026-09-06) cut the 39 rows
-    `anthropics/claude-plugins-official` already lists as plugins and the 3 we
-    published as plugins ourselves. A server leaves this file the day its
-    plugin lands, so nobody is ever offered two routes to the same server.
+    index references, and the trust anchor the entries are checked against.
+    Each signed entry carried its own signature over its own bytes, so removing
+    a row never invalidated another — and no row carries one now: the automation
+    starters were never signed, and an agent CLI row is a pointer to a plugin the
+    app already bundles rather than bytes to download. `trusted-publishers.json`
+    stays anyway, because all thirteen CLI rows claim a verified publisher and
+    that claim is only allowed under a name listed there as verified. `icons/`
+    holds a reviewable SVG per entry, generated in the app repo; every row also
+    carries the same mark inline as a data URI, so those files are read by
+    people rather than by the app.
 
 No source code is here. Release notes are written by hand.
 
@@ -80,10 +90,14 @@ installed a plugin from it are told an update is available on the next fetch.
   per-file `sha256` digests — and it is the right one for a skill bundle that
   has to be SIGNED, which a Claude marketplace cannot carry. It is the wrong one
   for anything a marketplace can list.
-- **An MCP server** — an inline entry (`mcp.servers[]`, `provides: ["mcp"]`)
-  or a signed bundle under `plugins/<id>/`.
-- **A skill of our own** — a directory under `skills/<id>/` with a `SKILL.md`
-  whose frontmatter names it and carries a `version`.
+- **An MCP server** — don't. Not as an inline `mcp.servers[]` entry, not as a
+  signed bundle under `plugins/<id>/`. A server somebody else wrote reaches
+  people through the marketplace that carries it; add that marketplace to
+  `sources.json`.
+- **A skill of our own** — only if it teaches the studio itself, and then it
+  belongs in `sprintengine-studio/skills/`, not in this index. A skill that
+  teaches somebody else's tool is not ours to publish; add the marketplace that
+  carries it to `sources.json` instead.
 - **Remove** — delete the entry (and its bundle directory). Installed copies
   are not taken away from anyone; they stop being offered.
 
@@ -91,10 +105,51 @@ Rules the verifier enforces on every pull request:
 
 - an entry's `source` is HTTPS on `github.com` / `raw.githubusercontent.com`;
 - a bundle carrying a `module` or `cli` component is signed by a key in
-  `trusted-publishers.json`; an unsigned entry may not set
-  `publisher.verified`;
+  `trusted-publishers.json`; an unsigned entry may not set `publisher.verified`
+  unless it is an inline agent-CLI row, which proves identity through the signed
+  app bundle instead and must still name a publisher listed there as verified;
 - component file digests match the committed bytes.
 
 The studio bundles a snapshot of this catalogue as its offline seed
 (`npm run sync:catalogue` in the app repo, run before a release), the same way
-it bundles `model-feed.json`.
+it bundles `model-feed.json`. That script still expects `mcps/catalog.json` and
+a `studio-skills/` directory, neither of which is published any more; it has to
+be updated in the app repo before the next release sync.
+
+## The sources list
+
+`sources.json` is a curated list of places to get skills and plugins. Every row
+is a GitHub repository in the Claude plugin marketplace format — a
+`.claude-plugin/marketplace.json` at the root — which is a shape the studio
+already reads and pins per commit. Adding a source does not install anything;
+it puts that repository's plugins in the catalogue beside ours, where a person
+chooses.
+
+```json
+{ "id": "claude-plugins-official", "repo": "anthropics/claude-plugins-official",
+  "kind": "claude-marketplace", "description": "..." }
+```
+
+- `repo` is `owner/name` on github.com.
+- `kind` is `claude-marketplace` (the repository holds
+  `.claude-plugin/marketplace.json`) or `skills-repo` (a folder tree of
+  `SKILL.md` files and no manifest). Every row today is the former.
+- Anthropic's own sources come first. Everything after them is a community
+  marketplace we would point somebody at, not something we vouch for.
+
+**The list is capped at six**, and the cap is the point. Every source costs
+GitHub requests on every scan, and a studio with no token in Settings runs on
+the anonymous budget: 60 requests an hour per machine, and a scan that follows
+a marketplace's cross-repository entries stops after twenty of them rather than
+250. A longer list would spend that before it reached the sources somebody came
+for. Adding a seventh means removing one.
+
+Two of these are already always present in every studio and cannot be removed —
+`anthropics/claude-plugins-official` and this repository — so their rows here
+are a statement of what the list is for, not an instruction to add them twice.
+
+MCP servers need no separate route here: a plugin in any of these marketplaces
+brings its own `.mcp.json`, which is why `mcps/catalog.json` — a list of servers
+with no plugin anywhere — was retired rather than replaced.
+
+Run the check locally with `node scripts/check-sources.mjs`.

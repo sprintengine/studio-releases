@@ -1,10 +1,10 @@
-name: Check model feed
+name: Check feeds
 on:
   push:
     branches: [main]
-    paths: [model-feed.json, scripts/**]
+    paths: [model-feed.json, sources.json, scripts/**]
   pull_request:
-    paths: [model-feed.json, scripts/**]
+    paths: [model-feed.json, sources.json, scripts/**]
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -14,3 +14,4 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/check-model-feed.mjs
+      - run: node scripts/check-sources.mjs

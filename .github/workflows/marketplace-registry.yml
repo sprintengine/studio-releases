@@ -6,7 +6,6 @@ on:
       - .github/workflows/marketplace-registry.yml
       - icons/**
       - marketplace.json
-      - mcps/**
       - plugins/**
       - trusted-publishers.json
   push:
@@ -16,7 +15,6 @@ on:
       - .github/workflows/marketplace-registry.yml
       - icons/**
       - marketplace.json
-      - mcps/**
       - plugins/**
       - trusted-publishers.json
 
