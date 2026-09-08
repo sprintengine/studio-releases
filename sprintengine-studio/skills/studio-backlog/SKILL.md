@@ -35,7 +35,7 @@ mockups: backlog/mockups/2026-07-06-x.html  # optional; comma-separated project-
 
 # Title as a single H1
 
-What, why, user impact, and anything needed to understand the request.
+Body in the sections below.
 ```
 
 `type` is the only field OKF requires; fill the rest only where you can do so
@@ -68,6 +68,27 @@ path to the project folder, and repeat the call. `workspace_list` resolving a
 workspace does not mean this connection is bound to one, so do not treat that
 as evidence the default will work.
 
+## The body
+
+Five headings. `Context` and `Must` are required; the rest when they apply.
+
+- **`## Context`** — facts with addresses: `auto-run.ts:1171`, a count, an event
+  name. Not how the fact was found.
+- **`## Must`** — the contract. One checkable claim per line.
+- **`## Must not`** — what is out of scope, and traps: what looks correct here
+  and is not.
+- **`## Verify`** — what proves each Must: a command, an assertion, a ledger.
+- **`## Open`** — `[NEEDS CLARIFICATION]` lines. Omit when there are none, and
+  clear them before the item is `ready`.
+
+A Must is answerable pass or fail. "Lists only the installed CLIs" is a Must;
+"behaves correctly" is not.
+
+Length follows the work: a one-line fix is a few lines, a large feature is as
+long as it needs to be. What to cut is length that is not contract — restating
+the title, narrating how a fact was found, arguing for the change. An agent
+reading the item is going to build it, not approve it.
+
 ## Survey
 
 `backlog_list` returns every item and epic with title, display id, status, type,
@@ -92,6 +113,10 @@ with the actual question if you get blocked. Set it `completed` only on verified
 work — if you stop early, leave it `in_progress` and say where you stopped.
 After each chunk, re-read what you wrote for contracts you did not honour, gaps
 you left, and tests you owed.
+
+Fixing a drifted item edits `Context`, `Must`, `Must not` and `Verify` — those
+say what is required, never what was done. What was done goes under a final
+`## Outcome`, last in the file. Above it is contract, below it is history.
 
 `backlog_update` changes lifecycle and triage frontmatter: `status`, `type`,
 `difficulty`, `criticality`, `risk`, `epic` membership, and on an epic the
