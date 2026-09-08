@@ -33,16 +33,21 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
 - **The signed index** — what a Claude marketplace cannot carry, because the
   studio refuses code-bearing components from any GitHub source unless they are
   signed:
-  - `marketplace.json`: twenty-two rows — thirteen agent CLIs, five automation
-    starters and four signed first-party MCP bundles. No modules yet, despite
-    what this line used to promise.
+  - `marketplace.json`: eighteen rows — thirteen agent CLIs and five automation
+    starters. No modules, and no MCP servers: the four signed MCP bundles left
+    on 2026-09-08 with the rest of the servers, because the studio publishes its
+    own plugin and nobody else's.
   - `plugins/<id>/`, `icons/`, `trusted-publishers.json`: the bundles that
-    index references, and the keys their signatures are checked against. Each
-    signed entry carries its own signature over its own bytes, so adding or
-    removing a row never invalidates another. `icons/` holds a reviewable SVG
-    per entry, generated in the app repo; a CLI or automation row carries the
-    same mark inline as a data URI, so most of those files are read by people
-    rather than by the app.
+    index references, and the trust anchor the entries are checked against.
+    Each signed entry carried its own signature over its own bytes, so removing
+    a row never invalidated another — and no row carries one now: the automation
+    starters were never signed, and an agent CLI row is a pointer to a plugin the
+    app already bundles rather than bytes to download. `trusted-publishers.json`
+    stays anyway, because all thirteen CLI rows claim a verified publisher and
+    that claim is only allowed under a name listed there as verified. `icons/`
+    holds a reviewable SVG per entry, generated in the app repo; every row also
+    carries the same mark inline as a data URI, so those files are read by
+    people rather than by the app.
 
 No source code is here. Release notes are written by hand.
 
@@ -85,8 +90,10 @@ installed a plugin from it are told an update is available on the next fetch.
   per-file `sha256` digests — and it is the right one for a skill bundle that
   has to be SIGNED, which a Claude marketplace cannot carry. It is the wrong one
   for anything a marketplace can list.
-- **An MCP server** — an inline entry (`mcp.servers[]`, `provides: ["mcp"]`)
-  or a signed bundle under `plugins/<id>/`.
+- **An MCP server** — don't. Not as an inline `mcp.servers[]` entry, not as a
+  signed bundle under `plugins/<id>/`. A server somebody else wrote reaches
+  people through the marketplace that carries it; add that marketplace to
+  `sources.json`.
 - **A skill of our own** — only if it teaches the studio itself, and then it
   belongs in `sprintengine-studio/skills/`, not in this index. A skill that
   teaches somebody else's tool is not ours to publish; add the marketplace that
@@ -98,8 +105,9 @@ Rules the verifier enforces on every pull request:
 
 - an entry's `source` is HTTPS on `github.com` / `raw.githubusercontent.com`;
 - a bundle carrying a `module` or `cli` component is signed by a key in
-  `trusted-publishers.json`; an unsigned entry may not set
-  `publisher.verified`;
+  `trusted-publishers.json`; an unsigned entry may not set `publisher.verified`
+  unless it is an inline agent-CLI row, which proves identity through the signed
+  app bundle instead and must still name a publisher listed there as verified;
 - component file digests match the committed bytes.
 
 The studio bundles a snapshot of this catalogue as its offline seed

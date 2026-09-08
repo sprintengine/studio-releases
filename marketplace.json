@@ -2,90 +2,6 @@
   "schemaVersion": 1,
   "plugins": [
     {
-      "id": "api-reference-mcp",
-      "name": "API Reference MCP",
-      "publisher": {
-        "name": "Multicode Labs",
-        "verified": true
-      },
-      "summary": "Installs the official OpenAI Docs MCP endpoint for API, Codex, and ChatGPT integration lookup.",
-      "category": "Documentation",
-      "icon": "icons/api-reference.svg",
-      "latest": 1,
-      "source": "https://github.com/sprintengine/studio-releases/tree/main/plugins/api-reference-mcp",
-      "provides": [
-        "mcp"
-      ],
-      "signature": {
-        "algorithm": "ed25519",
-        "publicKey": "MCowBQYDK2VwAyEAJ53RCVYIAvj+4HGLduBarxzTfqJvshh7+jyB200/PQM=",
-        "signature": "hnioAihVF93H+9R3jgTc73D9N6tKvfXxfE7rqMPjk54eK+/iGykBlM8YF3zx+fv09ZXzoQigLjQ0aPkdwYKeBA=="
-      }
-    },
-    {
-      "id": "browser-automation-mcp",
-      "name": "Browser Automation MCP",
-      "publisher": {
-        "name": "Multicode Labs",
-        "verified": true
-      },
-      "summary": "Installs the Playwright MCP server for browser inspection, UI automation, and end-to-end debugging.",
-      "category": "Testing",
-      "icon": "icons/browser-automation.svg",
-      "latest": 1,
-      "source": "https://github.com/sprintengine/studio-releases/tree/main/plugins/browser-automation-mcp",
-      "provides": [
-        "mcp"
-      ],
-      "signature": {
-        "algorithm": "ed25519",
-        "publicKey": "MCowBQYDK2VwAyEAJ53RCVYIAvj+4HGLduBarxzTfqJvshh7+jyB200/PQM=",
-        "signature": "mkluCNuyHGQjQbxpFt1VDvz9cF3gcOO4hhwMqY7NnUIYBxV1vhjjMrft59G2AJ5nlHZ9q9v/cUjwWHgY8IlKAw=="
-      }
-    },
-    {
-      "id": "current-docs-mcp",
-      "name": "Current Docs MCP",
-      "publisher": {
-        "name": "Multicode Labs",
-        "verified": true
-      },
-      "summary": "Installs the Context7 MCP server for current library documentation lookup.",
-      "category": "Documentation",
-      "icon": "icons/current-docs.svg",
-      "latest": 1,
-      "source": "https://github.com/sprintengine/studio-releases/tree/main/plugins/current-docs-mcp",
-      "provides": [
-        "mcp"
-      ],
-      "signature": {
-        "algorithm": "ed25519",
-        "publicKey": "MCowBQYDK2VwAyEAJ53RCVYIAvj+4HGLduBarxzTfqJvshh7+jyB200/PQM=",
-        "signature": "FLNJG9LwKQlu6U1u917bY0c/VV2Jz1M5tju9r7ZXbZf1ZZv2n5yBMWCFc3dX84YJTeayVWXHLpUx38ZqrVIYAw=="
-      }
-    },
-    {
-      "id": "repository-workflows-mcp",
-      "name": "Repository Workflows MCP",
-      "publisher": {
-        "name": "Multicode Labs",
-        "verified": true
-      },
-      "summary": "Installs the GitHub remote MCP endpoint for repository, pull request, and Actions workflows.",
-      "category": "Code Hosting",
-      "icon": "icons/repository-workflows.svg",
-      "latest": 1,
-      "source": "https://github.com/sprintengine/studio-releases/tree/main/plugins/repository-workflows-mcp",
-      "provides": [
-        "mcp"
-      ],
-      "signature": {
-        "algorithm": "ed25519",
-        "publicKey": "MCowBQYDK2VwAyEAJ53RCVYIAvj+4HGLduBarxzTfqJvshh7+jyB200/PQM=",
-        "signature": "q5Fq5bci2oJ33E51BLinAMBhLU672eb2R/71HiNU0C8IQOrKTLzk9SinXZ8pv4Eskeuv+LbQ8E+L7v5xMvN0BA=="
-      }
-    },
-    {
       "id": "dead-code-sweep-automation",
       "name": "Dead code sweep",
       "publisher": {
@@ -140,7 +56,7 @@
         "name": "Multicode Labs",
         "verified": false
       },
-      "summary": "Reviews the interface against the design system from source only — it does not render the app. One agent run nightly at 03:30 UTC, opening a pull request.",
+      "summary": "Reviews the interface against the design system from source only \u2014 it does not render the app. One agent run nightly at 03:30 UTC, opening a pull request.",
       "category": "Design",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Ik11bHRpY29kZSBtYXJrZXRwbGFjZSBzZWVkIGljb24iPgogIDxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMjIiIGZpbGw9IiMxMDE4MjAiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNiAxNikgc2NhbGUoNikiIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHJlY3QgeD0iMi41IiB5PSIzIiB3aWR0aD0iMTEiIGhlaWdodD0iMTAiIHJ4PSIxLjUiIHN0cm9rZT0iI2Q3ZWZlNyIvPgogICAgPHBhdGggZD0iTTIuNSA2LjVoMTEiIHN0cm9rZT0iI2Q3ZWZlNyIvPgogICAgPHBhdGggZD0iTTYgNi41VjEzIiBzdHJva2U9IiM0ZmMzYTEiLz4KICA8L2c+Cjwvc3ZnPgo=",
       "latest": 1,
@@ -156,7 +72,7 @@
         "name": "Multicode Labs",
         "verified": false
       },
-      "summary": "Reviews the day’s merged pull requests together for the seams between them. One agent run each evening at 18:00 UTC, opening a pull request.",
+      "summary": "Reviews the day\u2019s merged pull requests together for the seams between them. One agent run each evening at 18:00 UTC, opening a pull request.",
       "category": "Code Review",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Ik11bHRpY29kZSBtYXJrZXRwbGFjZSBzZWVkIGljb24iPgogIDxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMjIiIGZpbGw9IiMxMDE4MjAiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNiAxNikgc2NhbGUoNikiIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBhdGggZD0iTTQgMi41djVhMiAyIDAgMCAwIDIgMmg0IiBzdHJva2U9IiNkN2VmZTciLz4KICAgIDxwYXRoIGQ9Ik0xMiAyLjV2MTEiIHN0cm9rZT0iI2Q3ZWZlNyIvPgogICAgPGNpcmNsZSBjeD0iNCIgY3k9IjIuNSIgcj0iMS40IiBzdHJva2U9IiM0ZmMzYTEiLz4KICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMi41IiByPSIxLjQiIHN0cm9rZT0iIzRmYzNhMSIvPgogICAgPGNpcmNsZSBjeD0iMTIiIGN5PSIxMy41IiByPSIxLjQiIHN0cm9rZT0iIzRmYzNhMSIvPgogIDwvZz4KPC9zdmc+Cg==",
       "latest": 1,
