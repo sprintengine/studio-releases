@@ -11,25 +11,32 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
 - **The Claude marketplace** — this repository IS one, so any harness that
   speaks the format can add it, and the studio's own catalogues read it as the
   *SprintEngine Studio* source:
-  - `.claude-plugin/marketplace.json`: the listing. It holds exactly one row.
-  - `sprintengine-studio/`: that plugin — the stdio bridge to a running studio
-    (`.mcp.json`), its hooks, and its skills: one per studio area
-    (`studio-sprints`, `studio-backlog`, `studio-automations`,
-    `studio-workspaces`, `studio-review`), plus `debug` and `review-guide`,
-    which are features of the studio rather than general advice. Every one of
-    them teaches an agent to drive SprintEngine Studio itself.
+  - `.claude-plugin/marketplace.json`: the listing. Two plugins.
+  - `sprintengine-studio/`: the plugin the app installs into every workspace
+    it opens — the stdio bridge to a running studio (`.mcp.json`), its hooks,
+    and its skills: one per studio area (`studio-sprints`, `studio-backlog`,
+    `studio-automations`, `studio-workspaces`, `studio-review`), plus `debug`
+    and `review-guide`, which are features of the studio rather than general
+    advice. Every one of them teaches an agent to drive SprintEngine Studio
+    itself.
+  - `workflow-roles/`: the sixteen Sprint Engine workflow roles, each a skill.
+    An architect that owns a Sprint Engine task graph and adjudicates a Sprint
+    Engine plan gate is a description of this application's own behaviour —
+    the same test `studio-backlog` and `studio-sprints` pass, and the one
+    `frontend-design` failed. That is why they live here. They install
+    from the catalogue like any other plugin, and a workspace that has never
+    installed them stays without them.
 
-    These are the only skills published here, and they are the only ones that
-    ever will be. The studio is not in the business of authoring skills, or of
-    repackaging other people's MCP servers: it provides a place to add sources,
-    and recommends some. Two retirements followed from that rule. The
-    `studio-skills/` pack — twelve general-purpose workflow skills — went on
-    2026-09-07; `debug` and `review-guide` were the two that belonged to the
-    studio, and they live in `sprintengine-studio/skills/` now. The
-    `brave-search/`, `kubernetes/` and `snyk/` plugins went on 2026-09-08,
-    along with `mcps/catalog.json`, for the same reason: an MCP server someone
-    else wrote is not ours to publish, and a plugin in a marketplace already
-    carries its own `.mcp.json`.
+    These two plugins are the only skills published here. The studio is not
+    in the business of shipping skills; it provides a place to add skill
+    sources, and may recommend some. Two retirements followed from that
+    rule. The `studio-skills/` pack — twelve general-purpose workflow skills
+    — went on 2026-09-07; `debug` and `review-guide` were the two that
+    belonged to the studio, and they live in `sprintengine-studio/skills/`
+    now. The `brave-search/`, `kubernetes/` and `snyk/` plugins went on
+    2026-09-08, along with `mcps/catalog.json`, for the same reason: an MCP
+    server someone else wrote is not ours to publish, and a plugin in a
+    marketplace already carries its own `.mcp.json`.
 - **The signed index** — what a Claude marketplace cannot carry, because the
   studio refuses code-bearing components from any GitHub source unless they are
   signed:
@@ -94,10 +101,12 @@ installed a plugin from it are told an update is available on the next fetch.
   signed bundle under `plugins/<id>/`. A server somebody else wrote reaches
   people through the marketplace that carries it; add that marketplace to
   `sources.json`.
-- **A skill of our own** — only if it teaches the studio itself, and then it
-  belongs in `sprintengine-studio/skills/`, not in this index. A skill that
-  teaches somebody else's tool is not ours to publish; add the marketplace that
-  carries it to `sources.json` instead.
+- **A skill of our own** — only if it teaches the studio itself. Manuals for
+  a studio surface belong in `sprintengine-studio/skills/`. A workflow role
+  that describes this application's own sprint-run behaviour belongs in
+  `workflow-roles/`, the other Claude-marketplace plugin, not in this signed
+  index. A skill that teaches somebody else's tool is not ours to publish;
+  add the marketplace that carries it to `sources.json` instead.
 - **Remove** — delete the entry (and its bundle directory). Installed copies
   are not taken away from anyone; they stop being offered.
 
@@ -110,11 +119,10 @@ Rules the verifier enforces on every pull request:
   app bundle instead and must still name a publisher listed there as verified;
 - component file digests match the committed bytes.
 
-The studio bundles a snapshot of this catalogue as its offline seed
+The studio bundles a snapshot of `workflow-roles` as its offline seed
 (`npm run sync:catalogue` in the app repo, run before a release), the same way
-it bundles `model-feed.json`. That script still expects `mcps/catalog.json` and
-a `studio-skills/` directory, neither of which is published any more; it has to
-be updated in the app repo before the next release sync.
+it bundles `model-feed.json`. That pull never overwrites `sprintengine-studio/`,
+which is authored in the app repo and published here.
 
 ## The sources list
 

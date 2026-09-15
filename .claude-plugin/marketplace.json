@@ -4,12 +4,18 @@
     "name": "SprintEngine Studio",
     "url": "https://github.com/sprintengine"
   },
-  "description": "What SprintEngine Studio publishes: the plugin it installs into every workspace it opens. The skills and MCP servers an agent needs come from the sources listed in sources.json, not from here.",
+  "description": "What SprintEngine Studio publishes: the plugin it installs into every workspace it opens, and the sixteen workflow roles that describe this application's own sprint-run behaviour. Other skills and MCP servers come from the sources listed in sources.json.",
   "plugins": [
     {
       "name": "sprintengine-studio",
       "source": "./sprintengine-studio",
       "description": "Drive SprintEngine Studio from an agent: sprints, backlog, automations, workspaces and terminals, review.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "workflow-roles",
+      "source": "./workflow-roles",
+      "description": "The sixteen Sprint Engine workflow roles, each a skill whose frontmatter carries the role id, label and icon.",
       "version": "1.0.0"
     }
   ]
