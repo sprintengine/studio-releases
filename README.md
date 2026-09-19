@@ -14,18 +14,17 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
   - `.claude-plugin/marketplace.json`: the listing. It holds exactly one row.
   - `sprintengine-studio/`: that plugin — the stdio bridge to a running studio
     (`.mcp.json`), its hooks, and its skills: one per studio area
-    (`studio-sprints`, `studio-backlog`, `studio-automations`,
-    `studio-workspaces`, `studio-review`), plus `debug` and `review-guide`,
-    which are features of the studio rather than general advice. Every one of
-    them teaches an agent to drive SprintEngine Studio itself.
+    (`studio-backlog`, `studio-automations`, `studio-workspaces`,
+    `studio-canvas`, `studio-design-system`). Every one of them teaches an
+    agent to drive SprintEngine Studio itself.
 
     These are the only skills published here, and they are the only ones that
     ever will be. The studio is not in the business of authoring skills, or of
     repackaging other people's MCP servers: it provides a place to add sources,
     and recommends some. Two retirements followed from that rule. The
     `studio-skills/` pack — twelve general-purpose workflow skills — went on
-    2026-09-07; `debug` and `review-guide` were the two that belonged to the
-    studio, and they live in `sprintengine-studio/skills/` now. The
+    2026-09-07. `debug` ships inside the app with its own skills, and
+    `review-guide` moved to the Reviews plugin with the rest of review. The
     `brave-search/`, `kubernetes/` and `snyk/` plugins went on 2026-09-08,
     along with `mcps/catalog.json`, for the same reason: an MCP server someone
     else wrote is not ours to publish, and a plugin in a marketplace already
@@ -111,10 +110,10 @@ Rules the verifier enforces on every pull request:
 - component file digests match the committed bytes.
 
 The studio bundles a snapshot of this catalogue as its offline seed
-(`npm run sync:catalogue` in the app repo, run before a release), the same way
-it bundles `model-feed.json`. That script still expects `mcps/catalog.json` and
-a `studio-skills/` directory, neither of which is published any more; it has to
-be updated in the app repo before the next release sync.
+(`resources/marketplace/` and `resources/studio-plugin/sprintengine-studio/`
+in the app repo), the same way it bundles `model-feed.json`. The two are kept
+identical: a change made here is made there in the same release, and the other
+way round.
 
 ## The sources list
 

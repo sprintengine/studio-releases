@@ -9,8 +9,8 @@
     {
       "name": "sprintengine-studio",
       "source": "./sprintengine-studio",
-      "description": "Drive SprintEngine Studio from an agent: sprints, backlog, automations, workspaces and terminals, review.",
-      "version": "1.0.0"
+      "description": "Drive SprintEngine Studio from an agent: backlog, automations, workspaces and terminals, review.",
+      "version": "1.1.0"
     }
   ]
 }

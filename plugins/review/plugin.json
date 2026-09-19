@@ -1,0 +1,64 @@
+{
+  "id": "review",
+  "displayName": "Reviews",
+  "version": 1,
+  "defaultEnabled": true,
+  "source": "third-party",
+  "permissions": [
+    "ipc:invoke",
+    "ipc:agents",
+    "ipc:workspace-read",
+    "agents:session",
+    "filesystem:read-workspace",
+    "filesystem:write-workspace",
+    "process:spawn",
+    "network",
+    "storage"
+  ],
+  "publisher": "SprintEngine Labs",
+  "category": "orchestration",
+  "summary": "Guided, human-led review of a pull request, branch, or patch.",
+  "dependsOn": [
+    "agent-runtime"
+  ],
+  "components": {
+    "module": {
+      "path": "module",
+      "files": [
+        {
+          "path": "module/dist/main.cjs",
+          "sha256": "0d2f3f4e793d9c3a97ee65f0711bc01d106dc3dd159128e5b922bca0772779bb"
+        },
+        {
+          "path": "module/dist/renderer.mjs",
+          "sha256": "c7b2d6b5ae81f4b969e927dc376e70aa27585e8cb3e2dfc0522d384c3437e205"
+        },
+        {
+          "path": "module/manifest.json",
+          "sha256": "02a7a4fb7d976603c543d0db38b836fedec6441e116eb5b07165da11f10bf4eb"
+        },
+        {
+          "path": "module/README.md",
+          "sha256": "5e7ad7332803c040cf26df8dbb93b4cf7b41ba8b347f7dfc7895ccb0c3c4f858"
+        },
+        {
+          "path": "module/skills/review-guide/agents/openai.yaml",
+          "sha256": "76b855443e0694464a9093633107a758db5211464a4046b7edda4db064ff270c"
+        },
+        {
+          "path": "module/skills/review-guide/SKILL.md",
+          "sha256": "8eb1ad891ea3a4139e8474e3515897b5154f669c75fa63aaacec012a4e3cc807"
+        },
+        {
+          "path": "module/skills/studio-review/SKILL.md",
+          "sha256": "4cf7cee7644ddf96e4c6ab073c6d52b3b9c709586ccd4f17e08e77342f481edb"
+        }
+      ]
+    }
+  },
+  "signature": {
+    "algorithm": "ed25519",
+    "publicKey": "MCowBQYDK2VwAyEAptxscrkw0So+0D3Pm2FupKpxqOyaNmpUR909RrGSuX0=",
+    "signature": "1QMOt/EcQM7BuY7T3djoixeTz72Xfza0mE3nymQEj7Vta3dbt9XZsiGIy9DXm+w+fZKAvtY0ef70AcOJ6iDJCQ=="
+  }
+}

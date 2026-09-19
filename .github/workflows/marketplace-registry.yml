@@ -32,31 +32,28 @@ jobs:
         with:
           path: registry
 
-      # The app repo is private: STUDIO_CHECKOUT_TOKEN is a fine-grained PAT
-      # with contents:read on sprintengine/studio, set as a repository secret.
-      - name: Checkout Multicode validation tooling
+      - name: Checkout Studio validation tooling
         uses: actions/checkout@v4
         with:
-          repository: ${{ vars.MULTICODE_APP_REPOSITORY || 'sprintengine/studio' }}
-          ref: ${{ vars.MULTICODE_APP_REF || 'main' }}
-          path: multicode
-          token: ${{ secrets.STUDIO_CHECKOUT_TOKEN }}
+          repository: ${{ vars.STUDIO_APP_REPOSITORY || 'sprintengine/studio' }}
+          ref: ${{ vars.STUDIO_APP_REF || 'main' }}
+          path: studio
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: multicode/package-lock.json
+          cache-dependency-path: studio/package-lock.json
 
       - name: Install validation dependencies
-        working-directory: multicode
+        working-directory: studio
         run: npm ci
 
       - name: Validate registry root and plugin signatures
-        working-directory: multicode
+        working-directory: studio
         run: npm run verify:marketplace-registry -- --root "$GITHUB_WORKSPACE/registry"
 
       - name: Exercise valid and tampered submissions
-        working-directory: multicode
-        run: npm run test:marketplace-publish
+        working-directory: studio
+        run: npx vitest run resources/marketplace/verify-marketplace.test.ts

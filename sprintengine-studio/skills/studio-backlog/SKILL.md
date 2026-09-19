@@ -8,8 +8,8 @@ description: Read, triage, update and hand out SprintEngine Studio Backlog items
 Items are markdown files filed under the epic they belong to —
 `backlog/<epic-slug>/<item>.md` — or `backlog/unfiled/` when they have no epic.
 Epic definitions stay at `backlog/epics/<epic-slug>.md`. Each
-file's frontmatter is the source of truth for its lifecycle. `.multi-code/` is
-app-owned and never edited by hand.
+file's frontmatter is the source of truth for its lifecycle. The app-owned
+workspace directory, `.sprintengine/`, is never edited by hand.
 
 Prefer the `backlog_*` tools over editing files: they keep timestamps and
 working-agent links app-owned, and the Backlog panel's watcher sees their
@@ -35,7 +35,7 @@ mockups: backlog/mockups/2026-07-06-x.html  # optional; comma-separated project-
 
 # Title as a single H1
 
-Body in the sections below.
+What, why, user impact, and anything needed to understand the request.
 ```
 
 `type` is the only field OKF requires; fill the rest only where you can do so
@@ -46,9 +46,9 @@ guessed `criticality` is worse than none. `risk` is a separate axis from
 Three groups are the app's to write, never yours. **`id:`** is a workspace-global
 integer allocated once and never changed — omit it and the scan assigns one; the
 `KEY-<id>` shown in the panel is composed from it at render time. **`updated:`**
-is a precise UTC instant stamped on every real mutation. And `sprints`, `pr`,
-`starred` and `highlight` are written when a sprint runs, a pull request opens,
-or somebody stars the row.
+is a precise UTC instant stamped on every real mutation. And `pr`, `starred`
+and `highlight` are written when a pull request opens or somebody stars the
+row.
 
 On an epic file, `dependenciesPlanned: true` is the one extra field.
 
@@ -67,27 +67,6 @@ tool refuses with `project_root_required` — pass `projectRoot`, the absolute
 path to the project folder, and repeat the call. `workspace_list` resolving a
 workspace does not mean this connection is bound to one, so do not treat that
 as evidence the default will work.
-
-## The body
-
-Five headings. `Context` and `Must` are required; the rest when they apply.
-
-- **`## Context`** — facts with addresses: `auto-run.ts:1171`, a count, an event
-  name. Not how the fact was found.
-- **`## Must`** — the contract. One checkable claim per line.
-- **`## Must not`** — what is out of scope, and traps: what looks correct here
-  and is not.
-- **`## Verify`** — what proves each Must: a command, an assertion, a ledger.
-- **`## Open`** — `[NEEDS CLARIFICATION]` lines. Omit when there are none, and
-  clear them before the item is `ready`.
-
-A Must is answerable pass or fail. "Lists only the installed CLIs" is a Must;
-"behaves correctly" is not.
-
-Length follows the work: a one-line fix is a few lines, a large feature is as
-long as it needs to be. What to cut is length that is not contract — restating
-the title, narrating how a fact was found, arguing for the change. An agent
-reading the item is going to build it, not approve it.
 
 ## Survey
 
@@ -113,10 +92,6 @@ with the actual question if you get blocked. Set it `completed` only on verified
 work — if you stop early, leave it `in_progress` and say where you stopped.
 After each chunk, re-read what you wrote for contracts you did not honour, gaps
 you left, and tests you owed.
-
-Fixing a drifted item edits `Context`, `Must`, `Must not` and `Verify` — those
-say what is required, never what was done. What was done goes under a final
-`## Outcome`, last in the file. Above it is contract, below it is history.
 
 `backlog_update` changes lifecycle and triage frontmatter: `status`, `type`,
 `difficulty`, `criticality`, `risk`, `epic` membership, and on an epic the
@@ -144,7 +119,7 @@ assignment appears on its next refresh rather than instantly.
 agent whose first input is the target CLI's backlog invocation, then records the
 link. It never changes status — the item's lifecycle belongs to whoever works
 it, exactly as if a person had dragged the item onto a terminal. It takes the
-same launch fields as `agent_launch` minus specialist and connector, and
+same launch fields as `agent_launch` minus the connector, and
 `bypass` is refused here as everywhere on this surface. Use it when you are
 dispatching, not when you are the one doing the work.
 
