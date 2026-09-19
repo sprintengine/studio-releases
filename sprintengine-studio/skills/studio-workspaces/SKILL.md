@@ -35,7 +35,7 @@ holds. Read it before launching an agent on a worktree, because
 
 `agent_launch` with `{workspaceId}` adds a fully configured agent and starts its
 CLI through the same renderer flow the UI uses. It can select the model,
-permission preset, specialist and connector, and can isolate the agent in a git
+permission preset and connector, and can isolate the agent in a git
 worktree. Success is confirmed by the agent's terminal session registering with
 the main process — a call that returns success has a live session behind it.
 
@@ -77,8 +77,8 @@ not, not as a substitute for clicking.
 
 ## The mobile companion and the tailnet
 
-`workspace_snapshot` is the companion document: sprint engines, backlog,
-automations and workspaces as one versioned read, in the same path-token form
+`workspace_snapshot` is the companion document: backlog, automations and
+workspaces as one versioned read, in the same path-token form
 the relay serves — `ws_` tokens round-trip and local paths never leave the
 desktop. Pass `knownSnapshotVersion` from your previous read to get an
 `{unchanged: true}` marker instead of the whole document when nothing moved; a
@@ -94,7 +94,7 @@ unreachable from a remote client, by design. `tailnet_status` and
 `tailnet_list_peers` read; `tailnet_set_enabled`, `tailnet_revoke_device`,
 `tailnet_approve_pair_request` and `tailnet_deny_pair_request` change pairing
 state. `tailnet_offer_pairing` returns the pairing code and the
-`multicode-tailnet://` URL **once** — neither is re-readable afterwards, and
+`sprintengine-tailnet://` URL **once** — neither is re-readable afterwards, and
 `tailnet_status` never returns them — so deliver them to the person who asked in
 the same reply or they are lost. A lost code is recovered by offering again,
 which replaces the outstanding offer rather than needing a cancel first; that
