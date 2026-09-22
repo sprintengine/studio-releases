@@ -3,8 +3,9 @@
 The public half of Sprint Engine Studio. What lives here, and nothing else:
 
 - **Releases**: installers and `latest*.yml`, which the app's updater reads.
-- **`model-feed.json`**: the models each agent CLI can be told to use. Every
-  running studio fetches it once an hour; the website renders it.
+- **`model-feed.json`**: the models each agent CLI could be told to use, frozen
+  on 2026-09-22. Builds from before that date still fetch it once an hour; the
+  website renders it. Current builds ask the installed CLIs instead.
 - **`sources.json`**: the skill and plugin SOURCES the studio recommends —
   GitHub repositories in the Claude plugin marketplace format, each of which a
   person adds as a source in one click. See "The sources list" below.
