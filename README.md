@@ -52,6 +52,13 @@ No source code is here. Release notes are written by hand.
 
 ## Adding a model
 
+**Frozen since 2026-09-22.** The studio now asks each installed agent CLI
+which models it accepts, through the person's own login, so a model reaches
+the picker the day the CLI ships it and no row is edited here. This file stays
+as it is because builds from before that change still fetch it hourly and keep
+their last good copy; do not add to it or remove from it. What follows
+describes the retired procedure for the record.
+
 Edit `model-feed.json`, add a row under the CLI's `models`, bump `updatedAt`,
 open a pull request. The check runs on the PR. Once merged, every studio has
 the model within the hour and it shows on sprintengine.ai/models.
