@@ -17,15 +17,20 @@ The public half of Sprint Engine Studio. What lives here, and nothing else:
     (`.mcp.json`), its hooks, and its skills: one per studio area
     (`studio-backlog`, `studio-automations`, `studio-workspaces`,
     `studio-canvas`, `studio-design-system`). Every one of them teaches an
-    agent to drive SprintEngine Studio itself.
+    agent to drive SprintEngine Studio itself. Inside the studio, since
+    2026-09-28, these skills are opt-in: the app installs the bridge and hooks
+    into every workspace, and a skill only once the person turns it on (each
+    area's panel offers its own).
 
     These are the only skills published here, and they are the only ones that
     ever will be. The studio is not in the business of authoring skills, or of
     repackaging other people's MCP servers: it provides a place to add sources,
     and recommends some. Two retirements followed from that rule. The
     `studio-skills/` pack — twelve general-purpose workflow skills — went on
-    2026-09-07. `debug` ships inside the app with its own skills, and
-    `review-guide` moved to the Reviews plugin with the rest of review. The
+    2026-09-07. `debug` went with Debug Mode on 2026-09-28; the app now ships
+    one workflow skill of its own, `backlog`, and only to the agent a backlog
+    hand-off starts. `review-guide` moved to the Reviews plugin with the rest
+    of review. The
     `brave-search/`, `kubernetes/` and `snyk/` plugins went on 2026-09-08,
     along with `mcps/catalog.json`, for the same reason: an MCP server someone
     else wrote is not ours to publish, and a plugin in a marketplace already
